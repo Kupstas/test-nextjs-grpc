@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package test.app;
+
+service UserService {
+  rpc getAll (Empty) returns (UserList);
+}
+
+message Empty {
+}
+
+message User {
+  int64 id = 1;
+  string username = 2;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message UserList {
+  oneof users {
+    Users list = 1;
+    string error = 2;
+  }
+}

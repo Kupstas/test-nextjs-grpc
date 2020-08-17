@@ -1,0 +1,16 @@
+version: '3'
+services:
+  bus-kit-envoy:
+    build:
+      context: envoy
+      dockerfile: Dockerfile
+    volumes:
+      - ./envoy/config.template.yaml:/etc/config.template.yaml
+    environment:
+      ADMIN_PANEL: "admin: { access_log_path: /dev/stdout, address: { socket_address: { address: 0.0.0.0, port_value: 9001 } } }"
+      ENVOY_PORT: 9000
+      BACKEND_HOST: ${HOSTNAME} # run npm run envoy:up
+      BACKEND_PORT: 50051
+    ports:
+      - "9000:9000"
+      - "9001:9001"
